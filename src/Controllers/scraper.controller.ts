@@ -4,16 +4,19 @@ import IControllerBase from '../Interfaces/IControllerBase'
 import { EventRepository } from '../Repositories/EventRepository'
 import { Event } from '../Entities/event'
 import { Scraper } from '../Services/scrapers'
+import Logger from "../Utils/logger";
 
 class ScraperController implements IControllerBase {
     public path = '/'
     public router = express.Router()
     private eventRepository: EventRepository
     private scraper: Scraper
+    private logger: Logger
 
-    constructor(eventRepository: EventRepository) {
+    constructor(eventRepository: EventRepository, logger: Logger) {
         this.initRoutes()
         this.eventRepository = eventRepository
+        this.logger = logger
         this.scraper = new Scraper("http://www.madridpatina.com")
     }
 
@@ -28,7 +31,7 @@ class ScraperController implements IControllerBase {
           const events = urlsActiveEvents.map(async (link: string) => {
             const eventId = link.split("=")[1]
             const event = await this.eventRepository.getEvent(eventId)
-            // console.log(`Encontrado evento ${eventId}`)
+            this.logger.info(`Encontrado evento ${eventId}`);
             const eventData = await this.scraper.scrapeEvent(eventId)
             if (eventData.hasEnded && event?.hasEnded === true) {
               return {
@@ -47,7 +50,7 @@ class ScraperController implements IControllerBase {
 
     forceScrape = async (req: Request, res: Response) => {
         const eventId = req.params.eventID
-        // console.log(`Forzando el scrapping del evento ${eventId}`)
+        this.logger.info(`Forzando el scrapping del evento ${eventId}`)
         const event = await this.eventRepository.getEvent(eventId)
         const eventData = await this.scraper.scrapeEvent(eventId)
         const eventInfo: Event = event?await this.eventRepository.updateEvent(eventId, eventData):await this.eventRepository.createEvent(eventData)
