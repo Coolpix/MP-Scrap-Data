@@ -4,8 +4,8 @@ import * as bodyParser from 'body-parser'
 import cors from 'cors'
 import loggerMiddleware from './Middlewares/logger'
 
-import ApiController from './Controllers/api.controller'
-//import ScraperController from './Controllers/scraper.controller'
+//import ApiController from './Controllers/api.controller'
+import ScraperController from './Controllers/scraper.controller'
 import { EventRepository } from './Repositories/EventRepository'
 import Logger from "./Utils/logger";
 
@@ -21,8 +21,8 @@ const app = new App({
     port,
     logger,
     controllers: [
-        new ApiController(eventRepository),
-        //new ScraperController(eventRepository)
+        //new ApiController(eventRepository),
+        new ScraperController(eventRepository)
     ],
     middleWares: [
         bodyParser.json(),

@@ -6,6 +6,7 @@ export class EventRepository {
     private firestoreRepo: any
 
     constructor(credentials: any){
+        
         admin.initializeApp({
             credential: admin.credential.cert(credentials),
             databaseURL: `https://${credentials.project_id}.firebaseio.com`,
