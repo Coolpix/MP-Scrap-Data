@@ -40,6 +40,6 @@ steps:
 
 # deploy container image to Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'run', 'deploy', 'mp-scraper-new', '--image', 'eu.gcr.io/$PROJECT_ID/mp-scraper:${SHORT_SHA}', '--region', 'europe-west1', '--platform', 'managed', '--allow-unauthenticated']
+  args: ['beta', 'run', 'deploy', 'mp-scraper-new', '--image', 'eu.gcr.io/$PROJECT_ID/mp-scraper:${SHORT_SHA}', '--region', 'europe-west1', '--platform', 'managed', '--allow-unauthenticated', '--memory', '2Gi']
   env:
   - 'PORT=8080'
