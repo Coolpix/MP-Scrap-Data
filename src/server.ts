@@ -14,26 +14,24 @@ const port: string | number = process.env.PORT || 8080;
 const defaultLogLevel = process.env.DEFAULT_LOG_LEVEL || 'info';
 
 const logger = new Logger(defaultLogLevel);
-const serviceAccount = require('./madridpatina-cefb9-firebase-adminsdk.json');
+const serviceAccount = require(credentials);
+const eventRepository = new EventRepository(serviceAccount);
 
-((eventRepository: EventRepository) => {
-    const app = new App({
-        port,
-        logger,
-        controllers: [
-            new ApiController(eventRepository),
-            new ScraperController(eventRepository)
-        ],
-        middleWares: [
-            bodyParser.json(),
-            bodyParser.urlencoded({ extended: false }),
-            cors(),
-            loggerMiddleware(logger)
-        ]
-    })
+const app = new App({
+    port,
+    logger,
+    controllers: [
+        new ApiController(eventRepository),
+        new ScraperController(eventRepository)
+    ],
+    middleWares: [
+        bodyParser.json(),
+        bodyParser.urlencoded({ extended: false }),
+        cors(),
+        loggerMiddleware(logger)
+    ]
+});
 
-    app.listen()
-
-})(new EventRepository(serviceAccount))
+app.listen()
 
 // https://github.com/aligoren/express-typescript-test
