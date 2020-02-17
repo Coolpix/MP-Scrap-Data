@@ -19,7 +19,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase-admin": "^8.9.2",
-    "firebase-functions": "^3.3.0",
     "moment": "^2.24.0",
     "puppeteer": "^2.1.1",
     "reflect-metadata": "^0.1.13",
@@ -32,7 +31,6 @@
     "@types/puppeteer": "^2.0.0",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.5",
-    "firebase-functions-test": "^0.1.6"
+    "typescript": "^3.7.5"
   }
 }
