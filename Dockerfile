@@ -3,7 +3,6 @@
 FROM node:12-slim
 
 # Create and change to the app directory.
-RUN mkdir /src
 WORKDIR /
 
 # Copy application dependency manifests to the container image.
