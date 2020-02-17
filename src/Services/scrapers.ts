@@ -7,8 +7,17 @@ export class Scraper {
 
     private domain: string
 
+    private puppeteerConfig: object
+
     constructor(domain: string) {
         this.domain = domain
+        this.puppeteerConfig = {
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ]
+        }
         moment.locale('es')
     }
 
@@ -16,7 +25,7 @@ export class Scraper {
         const url: string = this.domain + '/eventos.php'
 
         // Lanzamos puppeteer, abrimos nueva pagina y navegamos a la URL seleccionada.
-        const browser = await puppeteer.launch()
+        const browser = await puppeteer.launch(this.puppeteerConfig)
         const page = await browser.newPage()
         await page.goto(url, { waitUntil: 'networkidle2' })
 
@@ -63,7 +72,7 @@ export class Scraper {
         const signInButton = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > table > tbody > tr:nth-child(3) > td > img'
 
         // Lanzamos puppeteer, abrimos nueva pagina y navegamos a la URL de login.
-        const browser = await puppeteer.launch()
+        const browser = await puppeteer.launch(this.puppeteerConfig)
         const page = await browser.newPage()
         await page.goto(loginUrl, { waitUntil: 'networkidle2', timeout: 0 })
 
