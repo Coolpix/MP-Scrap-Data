@@ -14,7 +14,7 @@ const port: string | number = process.env.PORT || 8080;
 const defaultLogLevel = process.env.DEFAULT_LOG_LEVEL || 'info';
 
 const logger = new Logger(defaultLogLevel);
-const serviceAccount = require(credentials);
+//const serviceAccount = require(credentials);
 // const eventRepository = new EventRepository(serviceAccount);
 
 /*const app = new App({
@@ -31,7 +31,7 @@ const serviceAccount = require(credentials);
         loggerMiddleware(logger)
     ]
 });*/
-
+//logger.info(`${serviceAccount.project_id}`)
 const app = new App(8080, logger)
 app.listen()
 
