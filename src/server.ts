@@ -8,7 +8,7 @@ import ScraperController from './Controllers/scraper.controller'
 import { EventRepository } from './Repositories/EventRepository'
 import Logger from "./Utils/logger";
 
-const credentials = process.env.PATH_SERVICE_ACCOUNT || '.madridpatina-cefb9-firebase-adminsdk.json';
+const credentials = process.env.PATH_SERVICE_ACCOUNT || '../madridpatina-cefb9-firebase-adminsdk.json';
 const port: string | number = process.env.PORT || 8080;
 const defaultLogLevel = process.env.DEFAULT_LOG_LEVEL || 'info';
 
