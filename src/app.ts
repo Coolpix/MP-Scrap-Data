@@ -1,5 +1,4 @@
 import express, { Application } from 'express'
-const Font = require('ascii-art-font');
 
 class App {
     public app: Application
@@ -27,10 +26,7 @@ class App {
 
     public listen() {
         this.app.listen(this.port, () => {
-            Font.create('Madridpatina    Scraper', "Doom", (err: any, rendered: string) => {
-                console.log(rendered)
-                console.log(`App listening on the http://localhost:${this.port}`)
-            });
+            // console.log(`App listening on the http://localhost:${this.port}`)
         })
     }
 }

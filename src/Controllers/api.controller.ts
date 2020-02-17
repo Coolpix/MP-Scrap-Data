@@ -46,7 +46,7 @@ class ApiController implements IControllerBase {
             res.send(event)
         } else {
             res.status(404).send({'message': `El evento ${req.params.eventID} no ha sido encontrado`})
-        }        
+        }
     }
 }
 

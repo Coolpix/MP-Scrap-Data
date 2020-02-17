@@ -15,28 +15,28 @@ export class Event {
     totalPeopleJoined: number
     totalSpotsAvalaible: number
     imgAltimetryURL: string
-    usersJoined: Array<Object>
+    usersJoined: object[]
 
-    constructor(eventID: string, name: string, imgUrl: string, month: string, monthDigit: string, date: string, unixTime: string, textTimeToEvent: string, hasEnded: boolean, type: string, totalSpots: string, totalPeopleJoined: string, imgAltimetryURL: string, usersJoined: Array<Object>) {
+    constructor(eventID: string, name: string, imgUrl: string, month: string, monthDigit: string, date: string, unixTime: string, textTimeToEvent: string, hasEnded: boolean, type: string, totalSpots: string, totalPeopleJoined: string, imgAltimetryURL: string, usersJoined: object[]) {
         this.id = eventID
         this.eventID = eventID
         this.name = name
         this.imgUrl = imgUrl
         this.month = month
-        this.monthDigit = parseInt(monthDigit)
+        this.monthDigit = parseInt(monthDigit, 10)
         this.date = date
-        this.unixTime = parseInt(unixTime)
+        this.unixTime = parseInt(unixTime, 10)
         this.textTimeToEvent = textTimeToEvent
         this.hasEnded = hasEnded
         this.type = type
-        this.totalSpots = parseInt(totalSpots)
-        this.totalPeopleJoined = parseInt(totalPeopleJoined)
+        this.totalSpots = parseInt(totalSpots, 10)
+        this.totalPeopleJoined = parseInt(totalPeopleJoined, 10)
         this.totalSpotsAvalaible = this.totalSpots - this.totalPeopleJoined
         this.imgAltimetryURL = imgAltimetryURL
         this.usersJoined = usersJoined
     }
 
-    //Mock method, just to avoid type error on firestore get method on collection
+    // Mock method, just to avoid type error on firestore get method on collection
     data(): Event {
         throw new Error("Method not implemented.")
     }

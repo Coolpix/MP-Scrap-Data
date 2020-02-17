@@ -19,7 +19,7 @@ CMD [ "npm", "run", "build" ]
 # Copy local code to the container image.
 COPY . /src
 
-EXPOSE 8080
-
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
+
+EXPOSE 8080

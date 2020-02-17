@@ -8,7 +8,7 @@ import { EventRepository } from './Repositories/EventRepository'
 
 
 ((eventRepository: EventRepository) => {
-    const app = new App({    
+    const app = new App({
         port: 8080,
         controllers: [
             new ApiController(eventRepository),
@@ -24,4 +24,4 @@ import { EventRepository } from './Repositories/EventRepository'
 
 })(new EventRepository())
 
-//https://github.com/aligoren/express-typescript-test
+// https://github.com/aligoren/express-typescript-test

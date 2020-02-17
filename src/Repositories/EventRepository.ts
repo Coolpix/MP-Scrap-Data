@@ -28,18 +28,18 @@ export class EventRepository {
     async getEvents(): Promise<Event[]> {
          return await this.firestoreRepo.get()
     }
-    
+
     async getEvent(eventID: string): Promise<Event | undefined> {
         const event = await this.firestoreRepo.doc(eventID).get()
-        return event.exists?event.data():null    
+        return event.exists?event.data():null
     }
 
-    async getAvailableEvents(): Promise<Event | undefined | Object> {
-        return await this.getEventsFromState(false)      
+    async getAvailableEvents(): Promise<Event | undefined | object> {
+        return await this.getEventsFromState(false)
     }
 
-    async getPastEvents(): Promise<Event | undefined | Object> {
-        return await this.getEventsFromState(true)        
+    async getPastEvents(): Promise<Event | undefined | object> {
+        return await this.getEventsFromState(true)
     }
 
     async updateEvent(eventID: string, newEvent: Event): Promise<Event> {

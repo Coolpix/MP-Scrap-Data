@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer'
 import moment from "moment"
 import { Event } from '../Entities/event'
 
-//export module Scraper {
+// export module Scraper {
 export class Scraper {
 
     private domain: string
@@ -15,7 +15,7 @@ export class Scraper {
     public scrapeEvents = async (): Promise<string[] | undefined> => {
         const url: string = this.domain + '/eventos.php'
 
-        //Lanzamos puppeteer, abrimos nueva pagina y navegamos a la URL seleccionada.
+        // Lanzamos puppeteer, abrimos nueva pagina y navegamos a la URL seleccionada.
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
         await page.goto(url, { waitUntil: 'networkidle2' })
@@ -24,14 +24,14 @@ export class Scraper {
             const listEventsSelector = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > table:nth-child(2) > tbody > tr > td > table:nth-child(3) > tbody > tr:nth-child(2) > td > table > tbody'
             const eventsTable = document.querySelector(listEventsSelector)
             if (eventsTable) {
-                const events_panel = Array.from(eventsTable.children)
-                if (events_panel) {
-                    const events = events_panel.map(tr => {
+                const eventsPanel = Array.from(eventsTable.children)
+                if (eventsPanel) {
+                    const events = eventsPanel.map(tr => {
                         if (tr) {
                             const trs = tr.querySelector('tr *')
                             if (trs) {
-                                const trs_onclick = trs.getAttribute('onclick')
-                                return trs_onclick
+                                const trsOnclick = trs.getAttribute('onclick')
+                                return trsOnclick
                             }
                         }
                     })
@@ -50,32 +50,32 @@ export class Scraper {
             return urlsActiveEvents
         }
 
-        //Cerramos navegador
+        // Cerramos navegador
         await browser.close()
     }
 
     public scrapeEvent = async (eventId: string): Promise<Event> => {
-        const event_url = this.domain + "/eventos_detalle.php?id=" + eventId
-        const login_url = "https://www.madridpatina.com/00_registro.php"
+        const eventUrl = this.domain + "/eventos_detalle.php?id=" + eventId
+        const loginUrl = "https://www.madridpatina.com/00_registro.php"
 
-        const username_input = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(2) > td > input'
-        const password_input = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(3) > td > input'
-        const sign_in_button = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > table > tbody > tr:nth-child(3) > td > img'
+        const usernameInput = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(2) > td > input'
+        const passwordInput = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(3) > td > input'
+        const signInButton = 'body > table > tbody > tr > td > table > tbody > tr:nth-child(4) > td:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > table > tbody > tr:nth-child(3) > td > img'
 
-        //Lanzamos puppeteer, abrimos nueva pagina y navegamos a la URL de login.
+        // Lanzamos puppeteer, abrimos nueva pagina y navegamos a la URL de login.
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
-        await page.goto(login_url, { waitUntil: 'networkidle2', timeout: 0 })
+        await page.goto(loginUrl, { waitUntil: 'networkidle2', timeout: 0 })
 
-        //Hacemos login
-        await page.type(username_input, '9833')
-        await page.type(password_input, 'sergio29')
-        await page.click(sign_in_button)
+        // Hacemos login
+        await page.type(usernameInput, '9833')
+        await page.type(passwordInput, 'sergio29')
+        await page.click(signInButton)
 
-        //Vamos a la URL del evento
-        await page.goto(event_url, { waitUntil: 'networkidle2', timeout: 0 })
+        // Vamos a la URL del evento
+        await page.goto(eventUrl, { waitUntil: 'networkidle2', timeout: 0 })
 
-        //Xpath
+        // Xpath
         const nameSelector = '/html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]/table[1]/tbody/tr[1]/td/table/tbody/tr[2]/td/span'
         const imgSelector = '/html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]/table[1]/tbody/tr[3]/td[3]/table/tbody/tr[1]/td/table/tbody/tr[2]/td/table/tbody/tr[1]/td/div/img'
         const dateSelector = '/html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]/table[1]/tbody/tr[1]/td/table/tbody/tr[1]/td[2]/span'
@@ -84,7 +84,7 @@ export class Scraper {
         const totalPeopleJoinedSelector = '/html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]/table[1]/tbody/tr[3]/td[1]/table/tbody/tr[2]/td/table/tbody/tr[4]/td/table/tbody/tr[8]/td[1]/table/tbody/tr[2]/td/span/ul/li[2]'
         const altimetryImgSelector = '/html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]/table[1]/tbody/tr[7]/td[1]/table/tbody/tr[1]/td/table/tbody/tr[4]/td/img'
 
-        //Nombre del evento
+        // Nombre del evento
         const [nameElement] = await page.$x(nameSelector)
         const nameContent = await nameElement.getProperty('textContent')
         const nameJson: any = await nameContent.jsonValue()
@@ -93,12 +93,12 @@ export class Scraper {
             name = nameJson.toString().trim()
         }
 
-        //Imagen del evento
+        // Imagen del evento
         const [imgElement] = await page.$x(imgSelector)
         const imgSrc = await imgElement.getProperty('src')
         const imgURL: any = await imgSrc.jsonValue()
 
-        //Fecha del evento
+        // Fecha del evento
         const [dateElement] = await page.$x(dateSelector)
         const dateContent = await dateElement.getProperty('textContent')
         const dateJson: any = await dateContent.jsonValue()
@@ -118,12 +118,12 @@ export class Scraper {
             hasEnded = moment().format('X') > unixTime
         }
 
-        //Tipo de evento
+        // Tipo de evento
         const [typeElement] = await page.$x(typeSelector)
         const typeContent = await typeElement.getProperty('textContent')
         const type: any = await typeContent.jsonValue()
 
-        //Plazas total del evento
+        // Plazas total del evento
         const [totalSpotsElement] = await page.$x(totalSpotsSelector)
         const totalSpotsContent = await totalSpotsElement.getProperty('textContent')
         const totalSpotsJson: any = await totalSpotsContent.jsonValue()
@@ -132,7 +132,7 @@ export class Scraper {
             totalSpots = totalSpotsJson.toString().trim().split(" ")[0]
         }
 
-        //Gente apuntada
+        // Gente apuntada
         const [totalPeopleJoinedElement] = await page.$x(totalPeopleJoinedSelector)
         const totalPeopleJoinedContent = await totalPeopleJoinedElement.getProperty('textContent')
         const totalPeopleJoinedJson: any = await totalPeopleJoinedContent.jsonValue()
@@ -141,27 +141,27 @@ export class Scraper {
             totalPeopleJoined = totalPeopleJoinedJson.toString().trim().split(" ")[0]
         }
 
-        //Imagen de la altimetria
+        // Imagen de la altimetria
         const [imgAltimetry] = await page.$x(altimetryImgSelector)
         const imgAltimetrySrc = await imgAltimetry.getProperty('src')
         const imgAltimetryURL: any = await imgAltimetrySrc.jsonValue()
 
-        //Asistentes al evento
+        // Asistentes al evento
         const usersJoined = await page.evaluate(() => {
             const listUsersSelector = '#mCSB_1 > div.mCSB_container > table > tbody'
             const usersTable = document.querySelector(listUsersSelector)
 
             if (usersTable) {
-                const users_panel = Array.from(usersTable.children)
-                if (users_panel) {
-                    const usersInfo = users_panel.map(tr => {
+                const usersPanel = Array.from(usersTable.children)
+                if (usersPanel) {
+                    const usersInfo = usersPanel.map(tr => {
                         if (tr) {
                             const tds = tr.querySelectorAll('td *')
                             if (tds) {
                                 const namesArray: any = []
                                 const photosArray: any = []
 
-                                Array.from(tds).map((td) => td.textContent).filter((td) => td !== '').map((name) => namesArray.push(name))
+                                Array.from(tds).map((td) => td.textContent).filter((td) => td !== '').map((userName) => namesArray.push(userName))
                                 Array.from(tds).map((td) => td.getAttribute('src')).filter((td) => td !== null).map((photoUrl) => photosArray.push(photoUrl));
 
                                 return { namesArray, photosArray }
@@ -184,7 +184,7 @@ export class Scraper {
             })
         })
 
-        //Cerramos navegador
+        // Cerramos navegador
         browser.close()
 
         const event = new Event(eventId, name, imgURL, month, monthDigit, date, unixTime, textTimeToEvent, hasEnded, type, totalSpots, totalPeopleJoined, imgAltimetryURL, infoUsers)
@@ -192,4 +192,4 @@ export class Scraper {
         return event
     }
 }
-//}
+// }

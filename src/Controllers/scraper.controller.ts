@@ -28,14 +28,14 @@ class ScraperController implements IControllerBase {
           const events = urlsActiveEvents.map(async (link: string) => {
             const eventId = link.split("=")[1]
             const event = await this.eventRepository.getEvent(eventId)
-            console.log(`Encontrado evento ${eventId}`)
+            // console.log(`Encontrado evento ${eventId}`)
             const eventData = await this.scraper.scrapeEvent(eventId)
             if (eventData.hasEnded && event?.hasEnded === true) {
               return {
                 "message": `El evento ${eventId} ya ha acabado, no se actualiza`
               }
             }
-            return event?await this.eventRepository.updateEvent(eventId, eventData):await this.eventRepository.createEvent(eventData)  
+            return event?await this.eventRepository.updateEvent(eventId, eventData):await this.eventRepository.createEvent(eventData)
           })
           if (events.length > 0) {
             Promise.all(events).then((data: any) => {
@@ -45,9 +45,9 @@ class ScraperController implements IControllerBase {
         }
     }
 
-    forceScrape = async (req: Request, res: Response) => { 
+    forceScrape = async (req: Request, res: Response) => {
         const eventId = req.params.eventID
-        console.log(`Forzando el scrapping del evento ${eventId}`)     
+        // console.log(`Forzando el scrapping del evento ${eventId}`)
         const event = await this.eventRepository.getEvent(eventId)
         const eventData = await this.scraper.scrapeEvent(eventId)
         const eventInfo: Event = event?await this.eventRepository.updateEvent(eventId, eventData):await this.eventRepository.createEvent(eventData)
