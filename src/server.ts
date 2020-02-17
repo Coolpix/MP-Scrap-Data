@@ -22,7 +22,7 @@ const app = new App({
     logger,
     controllers: [
         new ApiController(eventRepository),
-        // new ScraperController(eventRepository)
+        new ScraperController(eventRepository)
     ],
     middleWares: [
         bodyParser.json(),

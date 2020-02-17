@@ -32,9 +32,13 @@ class App {
     }
 
     public listen() {
-        this.app.listen(this.port, () => {
-           this.logger.info(`App listening on the http://localhost:${this.port}`)
-        })
+        try {
+            this.app.listen(this.port, () => {
+                this.logger.info(`App listening on the http://localhost:${this.port}`)
+            })
+        } catch(error) {
+            this.logger.error(`Error ${error}`)
+        }
     }
 }
 
