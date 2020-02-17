@@ -105,4 +105,4 @@ dist
 
 madridpatina-cefb9-firebase-adminsdk.json
 
-./build
+build/
