@@ -16,9 +16,9 @@ class ApiController implements IControllerBase {
 
     public initRoutes() {
         this.router.get('/events', this.getEvents)
-        this.router.get('/available_events', this.getAvailableEvents)
-        this.router.get('/past_events', this.getPastEvents)
-        this.router.get('/event/:eventID', this.getEvent)
+        //this.router.get('/available_events', this.getAvailableEvents)
+        //this.router.get('/past_events', this.getPastEvents)
+        //this.router.get('/event/:eventID', this.getEvent)
     }
 
     getEvents = async (req: Request, res: Response) => {
