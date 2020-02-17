@@ -26,7 +26,7 @@ const serviceAccount = require(credentials);
         ],
         middleWares: [
             bodyParser.json(),
-            bodyParser.urlencoded({ extended: true }),
+            bodyParser.urlencoded({ extended: false }),
             cors(),
             loggerMiddleware(logger)
         ]
