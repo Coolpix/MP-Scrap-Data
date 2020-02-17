@@ -3,7 +3,7 @@ import {config} from "dotenv";
 config();
 
 import express, { Application } from 'express'
-import Logger from './utils/logger';
+import Logger from './Utils/logger';
 
 class App {
     public app: Application
