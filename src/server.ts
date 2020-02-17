@@ -14,7 +14,7 @@ const port: string | number = process.env.PORT || 8080;
 const defaultLogLevel = process.env.DEFAULT_LOG_LEVEL || 'info';
 
 const logger = new Logger(defaultLogLevel);
-const serviceAccount = require(credentials);
+const serviceAccount = require('./madridpatina-cefb9-firebase-adminsdk.json');
 
 ((eventRepository: EventRepository) => {
     const app = new App({
