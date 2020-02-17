@@ -10,19 +10,14 @@ class App {
     public port: string | number;
     public logger: Logger;
 
-    constructor(port: string | number, logger: Logger) {
-        this.port = port
-        this.logger = logger
-        this.app = express()
-    }
-    /*constructor(appInit: { port: string | number; middleWares: any; controllers: any; logger: Logger}) {
+    constructor(appInit: { port: string | number; middleWares: any; controllers: any; logger: Logger}) {
         this.app = express()
         this.port = appInit.port
         this.logger = appInit.logger;
 
         this.middlewares(appInit.middleWares)
         this.routes(appInit.controllers)
-    }*/
+    }
 
     private middlewares(middleWares: { forEach: (arg0: (middleWare: any) => void) => void; }) {
         middleWares.forEach(middleWare => {

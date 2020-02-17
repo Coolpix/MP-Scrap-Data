@@ -1,11 +1,10 @@
 import App from './app'
-
 import * as bodyParser from 'body-parser'
 import cors from 'cors'
 import loggerMiddleware from './Middlewares/logger'
 
 // import ApiController from './Controllers/api.controller'
-// import ScraperController from './Controllers/scraper.controller'
+import ScraperController from './Controllers/scraper.controller'
 // import { EventRepository } from './Repositories/EventRepository'
 import Logger from "./Utils/logger";
 
@@ -14,15 +13,15 @@ const port: string | number = process.env.PORT || 8080;
 const defaultLogLevel = process.env.DEFAULT_LOG_LEVEL || 'info';
 
 const logger = new Logger(defaultLogLevel);
-//const serviceAccount = require(credentials);
+// const serviceAccount = require(credentials);
 // const eventRepository = new EventRepository(serviceAccount);
 
-/*const app = new App({
+const app = new App({
     port,
     logger,
     controllers: [
-        //new ApiController(eventRepository),
-        //new ScraperController(eventRepository)
+        // new ApiController(eventRepository),
+        new ScraperController()
     ],
     middleWares: [
         bodyParser.json(),
@@ -30,9 +29,8 @@ const logger = new Logger(defaultLogLevel);
         cors(),
         loggerMiddleware(logger)
     ]
-});*/
-//logger.info(`${serviceAccount.project_id}`)
-const app = new App(8080, logger)
+});
+
 app.listen()
 
 // https://github.com/aligoren/express-typescript-test
