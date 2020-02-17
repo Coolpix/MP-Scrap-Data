@@ -9,17 +9,17 @@ export default class Logger {
         this.logger.configure({
             level: defaultLevel,
             format: combine(
-                label({ label: 'chatbot-api' }),
+                label({ label: 'mp-scraper' }),
                 timestamp(),
                 prettyPrint()
             ),
             transports: [
                 new this.logger.transports.Console(),
-                new this.logger.transports.File({ filename: 'chatbot-api.log' }),
-                new this.logger.transports.File({ filename: 'chatbot-api-error.log', level: 'error' }),
+                new this.logger.transports.File({ filename: 'mp-scraper.log' }),
+                new this.logger.transports.File({ filename: 'mp-scraper-error.log', level: 'error' }),
             ],
             exceptionHandlers: [
-                new this.logger.transports.File({ filename: 'chatbot-api-exceptions.log' })
+                new this.logger.transports.File({ filename: 'mp-scraper-exceptions.log' })
             ]
         });
     }

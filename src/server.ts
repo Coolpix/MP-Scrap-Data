@@ -9,11 +9,16 @@ import ScraperController from './controllers/scraper.controller'
 import { EventRepository } from './Repositories/EventRepository'
 import Logger from "./utils/logger";
 
-const logger = new Logger('info');
+const credentials = process.env.PATH_SERVICE_ACCOUNT || './madridpatina-cefb9-firebase-adminsdk.json';
+const port: string | number = process.env.PORT || 8080;
+const defaultLogLevel = process.env.DEFAULT_LOG_LEVEL || 'info';
+
+const logger = new Logger(defaultLogLevel);
+const serviceAccount = require(credentials);
 
 ((eventRepository: EventRepository) => {
     const app = new App({
-        port: 8080,
+        port,
         logger,
         controllers: [
             new ApiController(eventRepository),
@@ -29,6 +34,6 @@ const logger = new Logger('info');
 
     app.listen()
 
-})(new EventRepository())
+})(new EventRepository(serviceAccount))
 
 // https://github.com/aligoren/express-typescript-test

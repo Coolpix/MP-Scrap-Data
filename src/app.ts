@@ -1,12 +1,16 @@
+import {config} from "dotenv";
+
+config();
+
 import express, { Application } from 'express'
 import Logger from './utils/logger';
 
 class App {
     public app: Application
-    public port: number
+    public port: string | number;
     public logger: Logger;
 
-    constructor(appInit: { port: number; middleWares: any; controllers: any; logger: Logger}) {
+    constructor(appInit: { port: string | number; middleWares: any; controllers: any; logger: Logger}) {
         this.app = express()
         this.port = appInit.port
         this.logger = appInit.logger;

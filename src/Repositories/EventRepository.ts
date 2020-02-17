@@ -4,13 +4,11 @@ import * as admin from 'firebase-admin'
 export class EventRepository {
 
     private firestoreRepo: any
-    private serviceAccount: any
 
-    constructor(){
-        this.serviceAccount = require('../../madridpatina-cefb9-firebase-adminsdk.json');
+    constructor(credentials: any){
         admin.initializeApp({
-            credential: admin.credential.cert(this.serviceAccount),
-            databaseURL: `https://${this.serviceAccount.project_id}.firebaseio.com`,
+            credential: admin.credential.cert(credentials),
+            databaseURL: `https://${credentials.project_id}.firebaseio.com`,
         })
 
         const firestore = admin.firestore()
