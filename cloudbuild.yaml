@@ -1,0 +1,45 @@
+steps:
+# Decrypt service account from KMS
+- name: gcr.io/cloud-builders/gcloud
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=madridpatina-cefb9-firebase-adminsdk.json.enc
+  - --plaintext-file=madridpatina-cefb9-firebase-adminsdk.json
+  - --location=global
+  - --keyring=madridpatina
+  - --key=firebase-service-account
+  # This step builds the container image.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build
+  args:
+  - 'build'
+  - '-t'
+  - 'eu.gcr.io/$PROJECT_ID/mp-scraper:$SHORT_SHA'
+  - '-t'
+  - 'eu.gcr.io/$PROJECT_ID/mp-scraper:latest'
+  - '.'
+
+# This step pushes the image to Container Registry
+# The PROJECT_ID and SHORT_SHA variables are automatically
+# replaced by Cloud Build.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push 
+  args:
+  - 'push'
+  - 'eu.gcr.io/$PROJECT_ID/mp-scraper:$SHORT_SHA'
+
+# This step pushes the image to Container Registry
+# The PROJECT_ID and SHORT_SHA variables are automatically
+# replaced by Cloud Build.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push Latest
+  args:
+  - 'push'
+  - 'eu.gcr.io/$PROJECT_ID/mp-scraper:latest'  
+
+# deploy container image to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['beta', 'run', 'deploy', 'mp-scraper', '--image', 'eu.gcr.io/$PROJECT_ID/mp-scraper:${SHORT_SHA}', '--region', 'europe-west1', '--platform', 'managed', '--allow-unauthenticated']
+  env:
+  - 'PORT=8080'
