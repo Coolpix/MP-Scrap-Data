@@ -14,6 +14,8 @@ COPY package*.json /src/
 # Install production dependencies.
 RUN npm install
 
+CMD [ "npm", "run", "build" ]
+
 # Copy local code to the container image.
 COPY . /src
 
