@@ -1,12 +1,15 @@
 import express, { Application } from 'express'
+import Logger from './utils/logger';
 
 class App {
     public app: Application
     public port: number
+    public logger: Logger;
 
-    constructor(appInit: { port: number; middleWares: any; controllers: any; }) {
+    constructor(appInit: { port: number; middleWares: any; controllers: any; logger: Logger}) {
         this.app = express()
         this.port = appInit.port
+        this.logger = appInit.logger;
 
         this.middlewares(appInit.middleWares)
         this.routes(appInit.controllers)
@@ -26,7 +29,7 @@ class App {
 
     public listen() {
         this.app.listen(this.port, () => {
-            // console.log(`App listening on the http://localhost:${this.port}`)
+           this.logger.info(`App listening on the http://localhost:${this.port}`)
         })
     }
 }
