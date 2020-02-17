@@ -9,9 +9,6 @@
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc -p ."
   },
-  "engines": {
-    "node": "8"
-  },
   "keywords": [],
   "author": "Sergio Alonso",
   "license": "ISC",
