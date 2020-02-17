@@ -4,22 +4,16 @@ FROM node:12-slim
 
 # Create and change to the app directory.
 RUN mkdir /src
-WORKDIR /src
+WORKDIR /
 
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure both package.json AND package-lock.json are copied.
 # Copying this separately prevents re-running npm install on every code change.
-COPY package*.json /src/
+COPY package*.json /
 
 # Install production dependencies.
 RUN npm install
 
-CMD [ "npm", "run", "build" ]
-
-# Copy local code to the container image.
-COPY . /src
-
-# Run the web service on container startup.
-CMD [ "npm", "start" ]
+CMD [ "npm", "start"]
 
 EXPOSE 8080

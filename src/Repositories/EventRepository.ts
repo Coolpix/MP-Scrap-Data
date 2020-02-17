@@ -1,28 +1,24 @@
 import { Event } from '../Entities/event'
 import * as admin from 'firebase-admin'
-import fs from 'fs'
-import path from 'path'
 
 export class EventRepository {
 
     private firestoreRepo: any
+    private serviceAccount: any
 
     constructor(){
-        fs.readFile(path.join(__dirname,'../../madridpatina-cefb9-firebase-adminsdk.json'), 'utf8', (err, contents) => {
-            const serviceAccount = JSON.parse(contents)
-            admin.initializeApp({
-                credential: admin.credential.cert(serviceAccount),
-                databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`,
-            })
-    
-            const firestore = admin.firestore()
-            firestore.settings({
-                timestampsInSnapshots: true,
-            })
-    
-            this.firestoreRepo = firestore.collection('events')
-        });
+        this.serviceAccount = require('../../madridpatina-cefb9-firebase-adminsdk.json');
+        admin.initializeApp({
+            credential: admin.credential.cert(this.serviceAccount),
+            databaseURL: `https://${this.serviceAccount.project_id}.firebaseio.com`,
+        })
 
+        const firestore = admin.firestore()
+        firestore.settings({
+            timestampsInSnapshots: true,
+        })
+
+        this.firestoreRepo = firestore.collection('events')
     }
 
     async createEvent(event: Event): Promise<Event> {
