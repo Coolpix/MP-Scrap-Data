@@ -20,7 +20,8 @@ import { EventRepository } from './Repositories/EventRepository'
         ]
     })
 
-    app.listen()    
+    app.listen()
+
 })(new EventRepository())
 
 //https://github.com/aligoren/express-typescript-test
