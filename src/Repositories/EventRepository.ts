@@ -25,7 +25,7 @@ export class EventRepository {
     }
 
     async getEvents(): Promise<Event[]> {
-         return await this.firestoreRepo.get()
+         return await this.firestoreRepo.orderBy('unixTime','asc').get()
     }
 
     async getEvent(eventID: string): Promise<Event | undefined> {
@@ -53,7 +53,7 @@ export class EventRepository {
 
     private async getEventsFromState(state:boolean) {
         const eventsAvailable: Event[] = []
-        const availableEvents = await this.firestoreRepo.where('hasEnded', '==', state).get()
+        const availableEvents = await this.firestoreRepo.where('hasEnded', '==', state).orderBy('unixTime','asc').get()
         for (const event of availableEvents.docs) {
             eventsAvailable.push(event.data())
         }
